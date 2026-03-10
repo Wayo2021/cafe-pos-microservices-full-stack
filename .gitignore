@@ -1,5 +1,5 @@
 # ========================
-# ☕ Spring Boot & Java
+# Spring Boot & Java
 # ========================
 target/
 pom.xml.tag
@@ -13,7 +13,7 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 
 # ========================
-# ⚛️ React & Node.js (เตรียมไว้สำหรับ Frontend)
+# React & Node.js (เตรียมไว้สำหรับ Frontend)
 # ========================
 node_modules/
 dist/
@@ -21,7 +21,7 @@ build/
 .env
 
 # ========================
-# 💻 IDE & OS Files (ไฟล์ขยะจากโปรแกรม)
+# IDE & OS Files (ไฟล์ขยะจากโปรแกรม)
 # ========================
 .idea/
 .vscode/
