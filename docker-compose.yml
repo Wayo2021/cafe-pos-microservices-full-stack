@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  # 🗄️ Database Server (ใช้ PostgreSQL เวอร์ชันเบา)
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: cafe-pos-db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+    ports:
+      - "5432:5432"
+    volumes:
+      # เก็บข้อมูลไว้ในเครื่องเรา กันข้อมูลหายตอนปิด Docker
+      - pgdata:/var/lib/postgresql/data
+      # : สั่งให้รันสคริปต์สร้าง 5 DB อัตโนมัติในครั้งแรก
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+
+volumes:
+  pgdata:
