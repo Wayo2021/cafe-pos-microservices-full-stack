@@ -105,3 +105,14 @@ git status
 git add .
 git commit -m "comment or explain"
 git push
+
+ถ้าโปรเจค spring boot รันไม่ได้ ให้ไปคลิกขวา ที่ pom.xml เพิ่ม maven 
+
+เปิด/ปิดใช้งาน docker
+docker-compose start
+docker-compose stop
+
+เปิดจองพื้นที่เพื่อใช้งาน
+docker-compose up -d
+เก็บกวาด
+docker-compose down -v

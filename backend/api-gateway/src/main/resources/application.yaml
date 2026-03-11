@@ -1,5 +1,5 @@
 server:
-  port: 8080 # พอร์ตหน้าด่านที่เปิดรับแขก (React จะยิงมาที่พอร์ตนี้พอร์ตเดียว)
+  port: 8090 # พอร์ตหน้าด่านที่เปิดรับแขก (React จะยิงมาที่พอร์ตนี้พอร์ตเดียว)
 
 spring:
   application:
@@ -23,30 +23,30 @@ spring:
       routes:
         # 1. กฎสำหรับ User Service
         - id: user-service
-          uri: http://localhost:8081           # ปลายทางที่จะส่งไป
+          uri: http://localhost:8091           # ปลายทางที่จะส่งไป
           predicates:
             - Path=/api/users/** # ถ้า URL เริ่มต้นด้วย /api/users/ ให้ส่งมาที่นี่
 
         # 2. กฎสำหรับ Product Service
         - id: product-service
-          uri: http://localhost:8082
+          uri: http://localhost:8092
           predicates:
             - Path=/api/products/**
 
         # 3. กฎสำหรับ Order Service
         - id: order-service
-          uri: http://localhost:8083
+          uri: http://localhost:8093
           predicates:
             - Path=/api/orders/**
 
         # 4. กฎสำหรับ Loyalty Service
         - id: loyalty-service
-          uri: http://localhost:8084
+          uri: http://localhost:8094
           predicates:
             - Path=/api/loyalty/**, /api/rewards/** # สามารถดักได้หลาย Path ใน Service เดียว
 
         # 5. กฎสำหรับ Report Service
         - id: report-service
-          uri: http://localhost:8085
+          uri: http://localhost:8095
           predicates:
             - Path=/api/reports/**
