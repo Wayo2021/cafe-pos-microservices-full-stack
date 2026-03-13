@@ -11,7 +11,7 @@ public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_detail_id")
-    private Long orderDetailId; // 🔑 PK
+    private Long orderDetailId; // PK
 
     // Physical FK (ลูกชี้กลับไปหาแม่)
     @ManyToOne

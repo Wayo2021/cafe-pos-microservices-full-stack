@@ -30,14 +30,15 @@ git init
 * Artifact: `service-product`
 * Name: `service-product`
 * Packaging: `Jar`
-* Java: `17` หรือ `21`
+* Java: `17`
+* Configuration: `YAML`
 
 ### Step 3: เพิ่ม Dependencies (อาวุธประจำตัว)
 
 **"ADD DEPENDENCIES"**
 1. **Spring Web:** เอาไว้ทำ API (สร้าง Controller, รับ-ส่ง JSON)
 2. **Spring Data JPA:** เอาไว้คุยกับ Database สั่งบันทึก/ดึงข้อมูลแบบไม่ต้องเขียน SQL เอง
-3. **PostgreSQL Driver:** ตัวเชื่อมต่อที่ทำให้ Spring Boot คุยกับ DB ก้อนที่เราเพิ่งสร้างได้
+3. **PostgreSQL/MySQL Driver:** ตัวเชื่อมต่อที่ทำให้ Spring Boot คุยกับ DB ก้อนที่เราเพิ่งสร้างได้
 4. **Lombok:** ตัวช่วยลดการเขียนโค้ดที่ซ้ำซาก (พวก Getter/Setter)
 
 ### Step 4: ดาวน์โหลดและนำมาใส่ในโปรเจกต์ของเรา
@@ -57,7 +58,7 @@ A complete microservices architecture project demonstrating backend and frontend
 ## เครื่องมือและเทคโนโลยีที่ใช้
 * **Backend Framework:** Java Spring Boot
 * **Frontend Framework:** React
-* **Database:** PostgreSQL (รันผ่าน Docker Compose)
+* **Database:** PostgreSQL/MySQL (รันผ่าน Docker Compose)
 
 ## Project Structure (Monorepo)
 

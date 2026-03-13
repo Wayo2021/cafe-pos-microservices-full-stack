@@ -7,37 +7,42 @@ import com.cafepos.service_order.entity.OrderDetail;
 import com.cafepos.service_order.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Map;
 
 @Service
 public class OrderService {
+
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private RestTemplate restTemplate; // 🌟 เรียกใช้เครื่องมือยิง API ที่เราเตรียมไว้ใน Config
+
     public Order placeOrder(OrderRequestDTO dto) {
         Order order = new Order();
-        order.setDate(LocalDate.now()); // เซตวันที่ปัจจุบัน
-        order.setTime(LocalTime.now()); // เซตเวลาปัจจุบัน
+        order.setDate(LocalDate.now());
+        order.setTime(LocalTime.now());
         order.setEmpId(dto.getEmpId());
         order.setCusId(dto.getCusId());
 
         double totalPrice = 0.0;
         order.setOrderDetails(new ArrayList<>());
 
-        // วนลูปคิดเงินทีละแก้ว
         for (OrderDetailRequestDTO detailDTO : dto.getOrderDetails()) {
             OrderDetail detail = new OrderDetail();
             detail.setDrinkId(detailDTO.getDrinkId());
             detail.setAmount(detailDTO.getAmount());
 
-            // 🌐 [จำลอง] ยิง API ไปถามราคาแก้วนี้ จาก Product Service
+            // 🌐 ยิง API ของจริง! ไปถามราคาจาก Product Service
             double pricePerCup = fetchDrinkPriceFromProductService(detailDTO.getDrinkId());
 
             detail.setSubTotal(pricePerCup * detailDTO.getAmount());
-            detail.setOrder(order); // 🔗 Physical FK: ผูกลูกเข้ากับแม่
+            detail.setOrder(order);
 
             totalPrice += detail.getSubTotal();
             order.getOrderDetails().add(detail);
@@ -45,13 +50,12 @@ public class OrderService {
 
         order.setTotalPrice(totalPrice);
 
-        // 🌟 Business Logic: ทุกๆ 50 บาท ได้ 1 แต้ม
         int earnedPoint = (int) (totalPrice / 50);
         order.setEarnedPoint(earnedPoint);
 
         Order savedOrder = orderRepository.save(order);
 
-        // 🌐 [จำลอง] ยิง API ไปบอก User Service ให้บวกแต้มให้ลูกค้าคนนี้
+        // 🌐 ยิง API ของจริง! ไปบอก User Service ให้บวกแต้ม
         if (dto.getCusId() != null && earnedPoint > 0) {
             addPointToCustomer(dto.getCusId(), earnedPoint);
         }
@@ -59,12 +63,28 @@ public class OrderService {
         return savedOrder;
     }
 
-    // --- Mock Methods สำหรับการยิง API ข้าม Service ---
+    // ==========================================
+    // 🚀 ส่วนยิง API ข้าม Service ของจริง
+    // ==========================================
+
     private double fetchDrinkPriceFromProductService(Long drinkId) {
-        return 65.0; // สมมติว่ายิง API ไปถามแล้วได้ราคา 65 บาทกลับมา
+        // ยิง GET ไปที่พอร์ต 8082 (Product Service)
+        String url = "http://localhost:8082/api/drinks/" + drinkId;
+
+        // รับค่ากลับมาเป็น Map (JSON ก้อนนั้นนั่นเอง)
+        Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+
+        if (response != null && response.get("drinkPrice") != null) {
+            return Double.parseDouble(response.get("drinkPrice").toString());
+        }
+        throw new RuntimeException("ไม่สามารถดึงราคาจาก Product Service ได้!");
     }
 
     private void addPointToCustomer(Long cusId, Integer point) {
-        // โค้ดยิง API ยิงไปที่ POST /api/customers/{cusId}/add-point
+        // ยิง PUT ไปที่พอร์ต 8081 (User Service)
+        String url = "http://localhost:8081/api/customers/" + cusId + "/points?points=" + point;
+
+        // สั่งอัปเดต โดยไม่ได้คาดหวังผลลัพธ์อะไรกลับมาเป็นพิเศษ (ส่ง null ไปเป็น Body)
+        restTemplate.put(url, null);
     }
 }

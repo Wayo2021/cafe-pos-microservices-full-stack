@@ -13,12 +13,12 @@ public class Redeem {
     @Column(name = "redeem_id")
     private Long redeemId;
 
-    // 🔗 Physical FK (ลูกชี้กลับไปหาของรางวัล)
+    // Physical FK (ลูกชี้กลับไปหาของรางวัล)
     @ManyToOne
     @JoinColumn(name = "reward_id", nullable = false)
     private Reward reward;
 
-    // 🌐 Logical FK (ชี้ไปหาลูกค้าใน User Service)
+    // Logical FK (ชี้ไปหาลูกค้าใน User Service)
     @Column(name = "cus_id", nullable = false)
     private Long cusId;
 

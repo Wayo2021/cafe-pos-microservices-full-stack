@@ -23,15 +23,15 @@ public class RedeemService {
         Reward reward = rewardRepository.findById(dto.getRewardId())
                 .orElseThrow(() -> new RuntimeException("ไม่พบของรางวัล!"));
 
-        // 2. 🌟 Business Logic: เช็คสต๊อกคงเหลือ
+        // 2. Business Logic: เช็คสต๊อกคงเหลือ
         if (reward.getRemain() <= 0) {
             throw new RuntimeException("ของรางวัลหมดแล้ว!");
         }
 
-        // 3. 🌐 [จำลอง] ยิง API ไปเช็คแต้มปัจจุบันของลูกค้าที่ User Service
+        // 3. [จำลอง] ยิง API ไปเช็คแต้มปัจจุบันของลูกค้าที่ User Service
         int customerPoints = fetchCustomerPoints(dto.getCusId());
 
-        // 4. 🌟 Business Logic: เช็คแต้มว่าพอแลกไหม
+        // 4. Business Logic: เช็คแต้มว่าพอแลกไหม
         if (customerPoints < reward.getRewardPoint()) {
             throw new RuntimeException("แต้มของคุณไม่พอแลกของรางวัลนี้!");
         }
@@ -40,7 +40,7 @@ public class RedeemService {
         reward.setRemain(reward.getRemain() - 1);
         rewardRepository.save(reward);
 
-        // 6. 🌐 [จำลอง] ยิง API ไปบอก User Service ให้หักแต้มลูกค้า
+        // 6. [จำลอง] ยิง API ไปบอก User Service ให้หักแต้มลูกค้า
         deductCustomerPoints(dto.getCusId(), -reward.getRewardPoint()); // ส่งค่าติดลบไปหัก
 
         // 7. บันทึกประวัติการแลก

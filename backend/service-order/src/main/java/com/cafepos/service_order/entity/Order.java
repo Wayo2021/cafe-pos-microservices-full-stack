@@ -15,7 +15,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-    private Long orderId; // 🔑 PK
+    private Long orderId; // PK
 
     private LocalDate date;
     private LocalTime time;

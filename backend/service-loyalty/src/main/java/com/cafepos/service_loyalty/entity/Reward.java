@@ -23,7 +23,7 @@ public class Reward {
 
     private Integer remain;
 
-    // 🔗 Physical FK (เชื่อมกับประวัติการแลก)
+    // Physical FK (เชื่อมกับประวัติการแลก)
     @OneToMany(mappedBy = "reward", cascade = CascadeType.ALL)
     private List<Redeem> redeemRewards;
 

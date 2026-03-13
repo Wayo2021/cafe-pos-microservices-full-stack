@@ -18,7 +18,7 @@ public class CustomerService {
         customer.setFirstName(dto.getFirstName());
         customer.setLastName(dto.getLastName());
         customer.setPhoneNum(dto.getPhoneNum());
-        customer.setTotalPoint(0); // 🌟 Business Logic: ลูกค้าใหม่เริ่มที่ 0 แต้มเสมอ
+        customer.setTotalPoint(0); // Business Logic: ลูกค้าใหม่เริ่มที่ 0 แต้มเสมอ
 
         return customerRepository.save(customer);
     }

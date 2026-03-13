@@ -16,7 +16,7 @@ public class ReportService {
     // Method นี้อาจจะถูกตั้งเวลาให้ทำงานอัตโนมัติทุกๆ เที่ยงคืน (Cron Job)
     public ResultDay generateDailyReport(LocalDate targetDate) {
 
-        // 🌐 [จำลอง] ยิง API ไปที่ Order Service ขอข้อมูลยอดขายของ targetDate
+        // [จำลอง] ยิง API ไปที่ Order Service ขอข้อมูลยอดขายของ targetDate
         // เช่น GET /api/orders/summary?date=2026-03-12
         double totalIncomeFromOrderService = 4500.0;
         int totalOrdersFromOrderService = 35;
